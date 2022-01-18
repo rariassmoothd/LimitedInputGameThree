@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | Limited Input Game Three</title>
+    <title>Unity WebGL Player | Idle Space Base Defense RPG</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -20,7 +20,7 @@
       <div id="unity-footer">
         <div id="unity-webgl-logo"></div>
         <div id="unity-fullscreen-button"></div>
-        <div id="unity-build-title">Limited Input Game Three</div>
+        <div id="unity-build-title">Idle Space Base Defense RPG</div>
       </div>
     </div>
     <script>
@@ -56,15 +56,15 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/LimitedInputGameThree.loader.js";
+      var loaderUrl = buildUrl + "/WEBGL.loader.js";
       var config = {
-        dataUrl: buildUrl + "/LimitedInputGameThree.data.unityweb",
-        frameworkUrl: buildUrl + "/LimitedInputGameThree.framework.js.unityweb",
-        codeUrl: buildUrl + "/LimitedInputGameThree.wasm.unityweb",
+        dataUrl: buildUrl + "/WEBGL.data.unityweb",
+        frameworkUrl: buildUrl + "/WEBGL.framework.js.unityweb",
+        codeUrl: buildUrl + "/WEBGL.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
-        companyName: "LimitedInput",
-        productName: "Limited Input Game Three",
-        productVersion: "0.1",
+        companyName: "Limited Input",
+        productName: "Idle Space Base Defense RPG",
+        productVersion: "0.12",
         showBanner: unityShowBanner,
       };
 
@@ -76,15 +76,29 @@
       // config.matchWebGLToCanvasSize = false;
 
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        // Mobile device style: fill the whole browser client area with the game canvas:
+
+        var meta = document.createElement('meta');
+        meta.name = 'viewport';
+        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+        document.getElementsByTagName('head')[0].appendChild(meta);
         container.className = "unity-mobile";
-        // Avoid draining fillrate performance on mobile devices,
-        // and default/override low DPI mode on mobile browsers.
-        config.devicePixelRatio = 1;
+
+        // To lower canvas resolution on mobile devices to gain some
+        // performance, uncomment the following line:
+        // config.devicePixelRatio = 1;
+
+        canvas.style.width = window.innerWidth + 'px';
+        canvas.style.height = window.innerHeight + 'px';
+
         unityShowBanner('WebGL builds are not supported on mobile devices.');
       } else {
+        // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
+
         canvas.style.width = "1600px";
         canvas.style.height = "900px";
       }
+
       loadingBar.style.display = "block";
 
       var script = document.createElement("script");
